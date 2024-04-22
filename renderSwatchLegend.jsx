@@ -113,15 +113,16 @@ function getColorValues(c, spot) {
                 outputColors[i] = app.convertSampleColor(sourceSpace, colorComponents, targetSpace, ColorConvertPurpose.previewpurpose);
             }
             for (var j = outputColors[i].length - 1; j >= 0; j--) {
-                colorComp = splitColorComponents == true ? printColors[i].charAt(j) + ": " : "";
-                if(isNaN(outputColors[i][j])){
-                    outputColors[i][j] = colorComp + outputColors[i][j];
-                } else {
-                    outputColors[i][j] = colorComp + Math.round(outputColors[i][j]);
-                }
-                if (j == outputColors[i].length - 1) {
-                    outputColors[i][j] += "\r";
-                };
+    colorComp = splitColorComponents == true ? printColors[i].charAt(j) + ": " : "";
+    if(isNaN(outputColors[i][j])){
+        outputColors[i][j] = colorComp + outputColors[i][j];
+    } else {
+        var colorValue = Math.round(outputColors[i][j]);
+        outputColors[i][j] = colorComp + (colorValue < 10 ? "0" + colorValue : colorValue);
+    }
+    if (j == outputColors[i].length - 1) {
+        outputColors[i][j] += "\r";
+    };
             };
             outputColors[i] = outputColors[i].join(colorSeparator);
             if(!splitColorComponents) outputColors[i] = printColors[i]+" "+outputColors[i]
